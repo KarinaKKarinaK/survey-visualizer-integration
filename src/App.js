@@ -1,8 +1,7 @@
-// src/App.js
 import React, { useState, useMemo } from "react";
 import { useTriviaData } from "./hooks/useTriviaData";
 import { CategorySelector } from "./components/CategorySelector";
-import { CategoryPieChart } from "./components/CategoryPieChart";
+import { CategoryPieChart } from "./components/CategoryPiehart";
 import { DifficultyBarChart } from "./components/DifficultyBarChart";
 
 function App() {
@@ -11,14 +10,16 @@ function App() {
 
   // Filter questions by selected category
   const filteredQuestions = useMemo(
-    () => selectedCategory ? questions.filter(q => q.category === selectedCategory) : questions,
+    () => (selectedCategory ? questions.filter(q => q.category === selectedCategory) : questions),
     [questions, selectedCategory]
   );
 
   // Transform: Difficulty counts for filtered questions
   const difficultyChartData = useMemo(() => {
     const diffObj = { easy: 0, medium: 0, hard: 0 };
-    filteredQuestions.forEach(q => { diffObj[q.difficulty]++; });
+    filteredQuestions.forEach(q => {
+      if (q.difficulty && diffObj.hasOwnProperty(q.difficulty)) diffObj[q.difficulty]++;
+    });
     return Object.keys(diffObj).map(difficulty => ({ difficulty, count: diffObj[difficulty] }));
   }, [filteredQuestions]);
 
@@ -28,7 +29,7 @@ function App() {
   }, [categoryCounts]);
 
   return (
-    <div style={ { maxWidth: 700, margin: "0 auto" } }>
+    <div style={{ maxWidth: 700, margin: "0 auto" }}>
       <h2>Trivia Dashboard</h2>
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
