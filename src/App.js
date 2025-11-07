@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useTriviaData } from "./hooks/useTriviaData";
 import { CategorySelector } from "./components/CategorySelector";
-import { CategoryPieChart } from "./components/CategoryPiehart";
+import { CategoryPieChart } from "./components/CategoryPieChart";
 import { DifficultyBarChart } from "./components/DifficultyBarChart";
 
 function App() {
